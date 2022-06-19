@@ -1,4 +1,4 @@
-const API_ENDPOINT = 'http://localhost:3000/test';
+const API_ENDPOINT = 'http://localhost:3000/api/test';
 
 const fileInput = document.querySelector('#file-input');
 const submitButton = document.querySelector('#submit');
