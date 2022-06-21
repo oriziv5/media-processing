@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { Test } from "./controllers/test.js";
+import { extractFrameByFrameNumber, extractFrameBySecond} from "./controllers/frames.js";
 import multer from "multer";
 
 // create router
@@ -20,7 +20,8 @@ const corsOptions = {
   maxAge: oneHour,
 };
 
-router.route("/test").post(cors(corsOptions), upload.single("video"), Test);
+router.route("/second").post(cors(corsOptions), upload.single("video"), extractFrameBySecond);
+router.route("/frame").post(cors(corsOptions), upload.single("video"), extractFrameByFrameNumber);
 // All routes starts with prefix /api
 
 export default router;

@@ -8,7 +8,10 @@
     "start": "nodemon src/server/app.ts"
   },
   "nodemonConfig": {
-    "ignore": ["test/*", "docs/*"],
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
     "delay": 2500
   },
   "type": "module",
@@ -26,7 +29,9 @@
     "@ffmpeg/core": "^0.10.0",
     "@ffmpeg/ffmpeg": "^0.10.1",
     "cors": "^2.8.5",
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
+    "moment": "^2.29.3",
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^2.6.7",
     "p-queue": "^7.2.0"

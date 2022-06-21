@@ -1,5 +1,15 @@
 import { Request, Response } from 'express'
 
 export async function Home(req: Request, res: Response) {
-    res.send('OK');
+    res.render(
+        'index',
+        {
+        },
+        (err, html) => {
+            if (err) {
+                res.send(err)
+            }
+            res.send(html)
+        }
+    )
 }
