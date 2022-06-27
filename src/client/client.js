@@ -46,13 +46,6 @@ submitButton.addEventListener("click", async () => {
     const file = files[0];
 
     try {
-      // if(video.readyState > 0) {
-      //     var minutes = parseInt(video.duration / 60, 10);
-      //     var seconds = video.duration % 60;
-
-      //     // (Put the minutes and seconds in the display)
-
-      // }
       const thumbnail = await createThumbnail(file);
       thumbnailPreview.src = thumbnail;
     } catch (error) {
@@ -87,3 +80,5 @@ async function getDuration(file) {
   video.src = URL.createObjectURL(file);
   document.body.append(video);
 }
+
+// get number of frames from video file

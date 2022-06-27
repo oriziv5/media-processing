@@ -82,7 +82,8 @@ export async function extractFrameByFrameNumber(req: Request, res: Response) {
     // Get the second from query
 
     // Read the video from buffer
-    const videoData = req["file"].buffer;
+    const videoData = req["file"].buffer as Buffer;
+    console.log(`Got file size of ${getFileSize(videoData.byteLength)}`);
 
     // Create the ffmpeg instance
     const ffmpeg = await getFFmpeg();
@@ -99,14 +100,16 @@ export async function extractFrameByFrameNumber(req: Request, res: Response) {
         throw "File was not found";
       }
       //ffmpeg -i <input> -vf "select=eq(n\,34)" -vframes 1 out.png
-
+      //ffmpeg -i input -vf yadif="deint=interlaced",select='eq(n\,125)',scale=trunc(ih*dar):ih,setsar=1/1 -frames:v 1 -q:v 2 out.jpg
       await ffmpeg.run(
         "-i",
         inputFileName,
         "-vf",
-        `select=eq(n\\,${frame})`,
+        `yadif=deint=interlaced,select=eq(n\\,${frame}),scale=trunc(ih*dar):ih,setsar=1/1`,
         "-frames:v",
         "1",
+        "-q:v",
+        "2",
         outputFileName
       );
 
@@ -128,4 +131,12 @@ export async function extractFrameByFrameNumber(req: Request, res: Response) {
     }
     res.status(500).json({ status: 500, error: message });
   }
+}
+
+// get human reable file size from bytes number
+function getFileSize(bytes: number) { 
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  if (bytes == 0) return "0 Byte";
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)).toString());
+  return Math.round(bytes / Math.pow(1024, i)) + " " + sizes[i];
 }
